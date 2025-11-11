@@ -497,54 +497,13 @@
             background: rgba(139, 0, 0, 0.3);
             border-radius: 3px;
         }
-
-        .audio-toggle {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid #2a2a2a;
-            color: #555;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .audio-toggle:hover {
-            border-color: #3a3a3a;
-            color: #888;
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
-            transform: scale(1.1);
-        }
-
-        .audio-toggle.playing {
-            color: #8b0000;
-            border-color: #4d1a1a;
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
-        }
     </style>
 </head>
 <body>
-    <!-- Audio Player usando iframe (oculto) -->
-    <iframe 
-        id="bgMusic" 
-        src="" 
-        style="position: fixed; top: -1000px; left: -1000px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"
-        allow="autoplay">
-    </iframe>
-    
-    <!-- Botão de controle de áudio -->
-    <button id="audioToggle" class="audio-toggle">
-        <span id="audioIcon">🔇</span>
-    </button>
+    <!-- Audio Player -->
+    <audio id="bgMusic" loop autoplay preload="auto">
+        <source src="https://archive.org/download/verdadeira-arte-a-noiva-fantasma/Verdadeira%20Arte%20-%20A%20Noiva%20Fantasma.mp3" type="audio/mpeg">
+    </audio>
     
     <div class="particles" id="particles"></div>
     
@@ -689,50 +648,18 @@
         const secondPasswordInput = document.getElementById('secondPassword');
         const errorMsg2 = document.getElementById('errorMsg2');
 
-        // Controle de áudio com iframe
-        const bgMusicFrame = document.getElementById('bgMusic');
-        const audioToggle = document.getElementById('audioToggle');
-        const audioIcon = document.getElementById('audioIcon');
-        let isPlaying = false;
-        let frameLoaded = false;
-
-        // Detectar quando iframe carregar
-        bgMusicFrame.onload = function() {
-            if (bgMusicFrame.src) {
-                frameLoaded = true;
-                audioIcon.textContent = '🔊';
-                audioToggle.classList.add('playing');
-                isPlaying = true;
-            }
-        };
-
-        audioToggle.addEventListener('click', function() {
-            if (!frameLoaded) {
-                // Tentar carregar o iframe
-                bgMusicFrame.src = "https://archive.org/embed/verdadeira-arte-a-noiva-fantasma&autoplay=1&loop=1";
-                audioIcon.textContent = '⏳';
-            } else {
-                // Toggle visibility do iframe
-                if (isPlaying) {
-                    bgMusicFrame.style.display = 'none';
-                    audioIcon.textContent = '🔇';
-                    audioToggle.classList.remove('playing');
-                    isPlaying = false;
-                } else {
-                    bgMusicFrame.style.display = 'block';
-                    audioIcon.textContent = '🔊';
-                    audioToggle.classList.add('playing');
-                    isPlaying = true;
-                }
-            }
+        // Configurar áudio para iniciar automaticamente com volume baixo
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 0.1; // 10% do volume
+        
+        // Tentar iniciar a música automaticamente
+        bgMusic.play().catch(function(error) {
+            console.log('Autoplay bloqueado. A música iniciará ao interagir com a página.');
+            // Iniciar música no primeiro clique
+            document.addEventListener('click', function() {
+                bgMusic.play();
+            }, { once: true });
         });
-
-        // Tentar iniciar música automaticamente no primeiro clique
-        window.addEventListener('click', function() {
-            if (!frameLoaded && !bgMusicFrame.src) {
-                bgMusicFrame.src = "https://archive.org/embed/verdadeira-arte-a-noiva-fantasma&autoplay=1&loop=1";
-            }
-        }, { once: true });
 
         function acceptChallenge() {
             primaryPage.style.transition = 'opacity 1.5s ease-out';
