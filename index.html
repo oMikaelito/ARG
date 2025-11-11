@@ -271,27 +271,6 @@
             border-left: 2px solid #333;
         }
 
-        button {
-            background: none;
-            border: 1px solid #2a2a2a;
-            color: #555;
-            font-size: clamp(10px, 2.5vw, 11px);
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
-            cursor: pointer;
-            letter-spacing: 3px;
-            padding: 12px clamp(20px, 6vw, 30px);
-            transition: all 0.4s ease;
-            text-transform: uppercase;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            color: #888;
-            border-color: #3a3a3a;
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
         .fade-in {
             animation: fadeIn 2s ease-in;
         }
@@ -345,7 +324,6 @@
             justify-content: center;
             gap: clamp(30px, 8vw, 60px);
             margin-bottom: clamp(40px, 6vh, 60px);
-        }
         }
 
         .choice-btn {
@@ -608,8 +586,6 @@
             </form>
 
             <div class="divider fade-in"></div>
-
-            <button onclick="logout()">voltar</button>
         </div>
 
         <!-- Página Final -->
@@ -639,8 +615,6 @@
             </div>
 
             <div class="divider fade-in"></div>
-
-            <button onclick="logout()">voltar</button>
         </div>
     </div>
 
@@ -772,32 +746,6 @@
                 }, 3000);
             }
         });
-
-        function logout() {
-            const activePage = mainPage.style.display === 'block' ? mainPage : finalPage;
-            
-            activePage.style.transition = 'opacity 1.5s ease-out';
-            activePage.style.opacity = '0';
-            
-            setTimeout(() => {
-                activePage.style.display = 'none';
-                finalPage.style.display = 'none';
-                mainPage.style.display = 'none';
-                loginPage.style.display = 'none';
-                primaryPage.style.display = 'block';
-                primaryPage.style.opacity = '0';
-                primaryPage.style.transition = 'opacity 1.5s ease-in';
-                primaryPage.scrollTop = 0;
-                
-                // Reset página primária
-                document.getElementById('noBtn').classList.remove('hidden');
-                document.getElementById('warningMsg').classList.remove('show');
-                
-                setTimeout(() => {
-                    primaryPage.style.opacity = '1';
-                }, 50);
-            }, 1500);
-        }
     </script>
 </body>
 </html>
