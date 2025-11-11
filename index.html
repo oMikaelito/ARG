@@ -84,8 +84,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
             z-index: 1;
+            padding: 20px;
         }
 
         .login-page, .main-page {
@@ -268,6 +271,27 @@
             border-left: 2px solid #333;
         }
 
+        button {
+            background: none;
+            border: 1px solid #2a2a2a;
+            color: #555;
+            font-size: clamp(10px, 2.5vw, 11px);
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            cursor: pointer;
+            letter-spacing: 3px;
+            padding: 12px clamp(20px, 6vw, 30px);
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            color: #888;
+            border-color: #3a3a3a;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
         .fade-in {
             animation: fadeIn 2s ease-in;
         }
@@ -277,6 +301,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Estilos da Página Primária */
         #primaryPage {
             display: flex;
         }
@@ -320,6 +345,7 @@
             justify-content: center;
             gap: clamp(30px, 8vw, 60px);
             margin-bottom: clamp(40px, 6vh, 60px);
+        }
         }
 
         .choice-btn {
@@ -449,6 +475,7 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
+        /* Media queries para ajustes específicos */
         @media (max-width: 480px) {
             body {
                 padding: 5px;
@@ -482,6 +509,7 @@
             }
         }
 
+        /* Scrollbar personalizada para overflow */
         .login-page::-webkit-scrollbar,
         .main-page::-webkit-scrollbar {
             width: 6px;
@@ -502,6 +530,7 @@
 <body>
     <div class="particles" id="particles"></div>
     
+    <!-- Página Primária -->
     <div id="primaryPage" class="primary-container">
         <div class="question fade-in">você tem certeza disso?</div>
         
@@ -518,6 +547,7 @@
     </div>
     
     <div class="container">
+        <!-- Página de Login -->
         <div id="loginPage" class="login-page center">
             <div class="symbol-img">
                 <img src="https://i.imgur.com/lbX9hAN.jpg" alt="símbolo">
@@ -543,6 +573,7 @@
             <div class="hint">ele está no começo</div>
         </div>
 
+        <!-- Página Principal -->
         <div id="mainPage" class="main-page center">
             <div class="symbol-img fade-in">
                 <div class="symbol-text">◉</div>
@@ -577,8 +608,11 @@
             </form>
 
             <div class="divider fade-in"></div>
+
+            <button onclick="logout()">voltar</button>
         </div>
 
+        <!-- Página Final -->
         <div id="finalPage" class="main-page center">
             <div class="symbol-img fade-in">
                 <div class="symbol-text">◉</div>
@@ -605,10 +639,13 @@
             </div>
 
             <div class="divider fade-in"></div>
+
+            <button onclick="logout()">voltar</button>
         </div>
     </div>
 
     <script>
+        // Criar partículas com quantidade ajustada para mobile
         const particlesContainer = document.getElementById('particles');
         const isMobile = window.innerWidth < 768;
         const particleCount = isMobile ? 40 : 80;
@@ -735,6 +772,32 @@
                 }, 3000);
             }
         });
+
+        function logout() {
+            const activePage = mainPage.style.display === 'block' ? mainPage : finalPage;
+            
+            activePage.style.transition = 'opacity 1.5s ease-out';
+            activePage.style.opacity = '0';
+            
+            setTimeout(() => {
+                activePage.style.display = 'none';
+                finalPage.style.display = 'none';
+                mainPage.style.display = 'none';
+                loginPage.style.display = 'none';
+                primaryPage.style.display = 'block';
+                primaryPage.style.opacity = '0';
+                primaryPage.style.transition = 'opacity 1.5s ease-in';
+                primaryPage.scrollTop = 0;
+                
+                // Reset página primária
+                document.getElementById('noBtn').classList.remove('hidden');
+                document.getElementById('warningMsg').classList.remove('show');
+                
+                setTimeout(() => {
+                    primaryPage.style.opacity = '1';
+                }, 50);
+            }, 1500);
+        }
     </script>
 </body>
 </html>
