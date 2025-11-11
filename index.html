@@ -621,6 +621,15 @@
         // Configurar áudio
         const bgMusic = document.getElementById('bgMusic');
         bgMusic.volume = 0.1; // 10% do volume
+        
+        // Debug: verificar se o áudio carregou
+        bgMusic.addEventListener('canplaythrough', () => {
+            console.log('Áudio carregado e pronto para tocar');
+        });
+        
+        bgMusic.addEventListener('error', (e) => {
+            console.log('Erro ao carregar áudio:', e);
+        });
 
         // Criar partículas
         const particlesContainer = document.getElementById('particles');
@@ -654,9 +663,19 @@
 
         function acceptChallenge() {
             // Iniciar música ao clicar em "Sim"
-            bgMusic.play().catch((error) => {
-                console.log('Erro ao iniciar música:', error);
-            });
+            const playPromise = bgMusic.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('Música iniciada com sucesso');
+                }).catch((error) => {
+                    console.log('Erro ao iniciar música:', error);
+                    // Tentar novamente após um breve delay
+                    setTimeout(() => {
+                        bgMusic.play().catch(e => console.log('Segunda tentativa falhou:', e));
+                    }, 100);
+                });
+            }
 
             primaryPage.style.transition = 'opacity 1.5s ease-out';
             primaryPage.style.opacity = '0';
