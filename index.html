@@ -500,9 +500,53 @@
             background: rgba(139, 0, 0, 0.3);
             border-radius: 3px;
         }
+
+        /* Botão de controle de áudio */
+        .audio-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #2a2a2a;
+            color: #555;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .audio-toggle:hover {
+            border-color: #3a3a3a;
+            color: #888;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
+            transform: scale(1.1);
+        }
+
+        .audio-toggle.playing {
+            color: #8b0000;
+            border-color: #4d1a1a;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
+    <!-- Audio Player -->
+    <audio id="bgMusic" loop volume="0.3">
+        <source src="https://drive.google.com/uc?export=download&id=1r_9AT1T0sTa3G9uniSZE2OuYoNUAXXs-" type="audio/mpeg">
+    </audio>
+    
+    <!-- Botão de controle de áudio -->
+    <button id="audioToggle" class="audio-toggle">
+        <span id="audioIcon">🔇</span>
+    </button>
+    
     <div class="particles" id="particles"></div>
     
     <!-- Página Primária -->
@@ -645,6 +689,39 @@
         const secondForm = document.getElementById('secondForm');
         const secondPasswordInput = document.getElementById('secondPassword');
         const errorMsg2 = document.getElementById('errorMsg2');
+
+        // Controle de áudio
+        const bgMusic = document.getElementById('bgMusic');
+        const audioToggle = document.getElementById('audioToggle');
+        const audioIcon = document.getElementById('audioIcon');
+        let isPlaying = false;
+
+        // Definir volume baixo para música ambiente
+        bgMusic.volume = 0.25;
+
+        audioToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                bgMusic.pause();
+                audioIcon.textContent = '🔇';
+                audioToggle.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                bgMusic.play().catch(err => console.log('Erro ao tocar:', err));
+                audioIcon.textContent = '🔊';
+                audioToggle.classList.add('playing');
+                isPlaying = true;
+            }
+        });
+
+        // Tentar iniciar música automaticamente (alguns navegadores bloqueiam)
+        window.addEventListener('click', function() {
+            if (!isPlaying) {
+                bgMusic.play().catch(err => console.log('Autoplay bloqueado'));
+                audioIcon.textContent = '🔊';
+                audioToggle.classList.add('playing');
+                isPlaying = true;
+            }
+        }, { once: true });
 
         function acceptChallenge() {
             primaryPage.style.transition = 'opacity 1.5s ease-out';
