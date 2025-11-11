@@ -1,14 +1,4 @@
-input[type="password"] {
-            width: 100%;
-            padding: 15px 10px;
-            background: rgba(20, 20, 20, 0.4);
-            border: none;
-            border-bottom: 2px solid #2a2a2a;
-            color: #999;
-            font-size: clamp(14px, 3.5vw, 16px);
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
-            text-align: center;
-            letter<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -94,11 +84,8 @@ input[type="password"] {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
+            position: relative;
             z-index: 1;
-            padding: 20px;
         }
 
         .login-page, .main-page {
@@ -211,36 +198,7 @@ input[type="password"] {
                 0 0 20px rgba(139, 0, 0, 0.1);
         }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 15px 10px;
-            background: rgba(20, 20, 20, 0.4);
-            border: none;
-            border-bottom: 2px solid #2a2a2a;
-            color: #999;
-            font-size: clamp(14px, 3.5vw, 16px);
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
-            text-align: center;
-            letter-spacing: 6px;
-            transition: all 0.4s ease;
-            box-shadow: inset 0 -2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-bottom-color: #4a4a4a;
-            background: rgba(30, 30, 30, 0.5);
-            color: #ccc;
-            box-shadow: 
-                inset 0 -2px 10px rgba(0, 0, 0, 0.3),
-                0 0 20px rgba(139, 0, 0, 0.1);
-        }
-
-        input[type="text"]::placeholder {
-            color: #333;
-            letter-spacing: 3px;
-            opacity: 0;
-        }
+        input[type="password"]::placeholder {
             color: #333;
             letter-spacing: 3px;
             opacity: 0;
@@ -310,27 +268,6 @@ input[type="password"] {
             border-left: 2px solid #333;
         }
 
-        button {
-            background: none;
-            border: 1px solid #2a2a2a;
-            color: #555;
-            font-size: clamp(10px, 2.5vw, 11px);
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
-            cursor: pointer;
-            letter-spacing: 3px;
-            padding: 12px clamp(20px, 6vw, 30px);
-            transition: all 0.4s ease;
-            text-transform: uppercase;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            color: #888;
-            border-color: #3a3a3a;
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
         .fade-in {
             animation: fadeIn 2s ease-in;
         }
@@ -340,7 +277,6 @@ input[type="password"] {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Estilos da Página Primária */
         #primaryPage {
             display: flex;
         }
@@ -384,7 +320,6 @@ input[type="password"] {
             justify-content: center;
             gap: clamp(30px, 8vw, 60px);
             margin-bottom: clamp(40px, 6vh, 60px);
-        }
         }
 
         .choice-btn {
@@ -514,7 +449,6 @@ input[type="password"] {
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Media queries para ajustes específicos */
         @media (max-width: 480px) {
             body {
                 padding: 5px;
@@ -548,7 +482,6 @@ input[type="password"] {
             }
         }
 
-        /* Scrollbar personalizada para overflow */
         .login-page::-webkit-scrollbar,
         .main-page::-webkit-scrollbar {
             width: 6px;
@@ -569,7 +502,6 @@ input[type="password"] {
 <body>
     <div class="particles" id="particles"></div>
     
-    <!-- Página Primária -->
     <div id="primaryPage" class="primary-container">
         <div class="question fade-in">você tem certeza disso?</div>
         
@@ -586,7 +518,6 @@ input[type="password"] {
     </div>
     
     <div class="container">
-        <!-- Página de Login -->
         <div id="loginPage" class="login-page center">
             <div class="symbol-img">
                 <img src="https://i.imgur.com/lbX9hAN.jpg" alt="símbolo">
@@ -600,7 +531,7 @@ input[type="password"] {
 
             <form id="loginForm">
                 <input 
-                    type="text" 
+                    type="password" 
                     id="password" 
                     placeholder="" 
                     required 
@@ -612,7 +543,6 @@ input[type="password"] {
             <div class="hint">ele está no começo</div>
         </div>
 
-        <!-- Página Principal -->
         <div id="mainPage" class="main-page center">
             <div class="symbol-img fade-in">
                 <div class="symbol-text">◉</div>
@@ -637,7 +567,7 @@ input[type="password"] {
 
             <form id="secondForm">
                 <input 
-                    type="text" 
+                    type="password" 
                     id="secondPassword" 
                     placeholder="" 
                     required 
@@ -649,7 +579,6 @@ input[type="password"] {
             <div class="divider fade-in"></div>
         </div>
 
-        <!-- Página Final -->
         <div id="finalPage" class="main-page center">
             <div class="symbol-img fade-in">
                 <div class="symbol-text">◉</div>
@@ -680,7 +609,6 @@ input[type="password"] {
     </div>
 
     <script>
-        // Criar partículas com quantidade ajustada para mobile
         const particlesContainer = document.getElementById('particles');
         const isMobile = window.innerWidth < 768;
         const particleCount = isMobile ? 40 : 80;
@@ -807,32 +735,6 @@ input[type="password"] {
                 }, 3000);
             }
         });
-
-        function logout() {
-            const activePage = mainPage.style.display === 'block' ? mainPage : finalPage;
-            
-            activePage.style.transition = 'opacity 1.5s ease-out';
-            activePage.style.opacity = '0';
-            
-            setTimeout(() => {
-                activePage.style.display = 'none';
-                finalPage.style.display = 'none';
-                mainPage.style.display = 'none';
-                loginPage.style.display = 'none';
-                primaryPage.style.display = 'block';
-                primaryPage.style.opacity = '0';
-                primaryPage.style.transition = 'opacity 1.5s ease-in';
-                primaryPage.scrollTop = 0;
-                
-                // Reset página primária
-                document.getElementById('noBtn').classList.remove('hidden');
-                document.getElementById('warningMsg').classList.remove('show');
-                
-                setTimeout(() => {
-                    primaryPage.style.opacity = '1';
-                }, 50);
-            }, 1500);
-        }
     </script>
 </body>
 </html>
