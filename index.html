@@ -501,7 +501,7 @@
 </head>
 <body>
     <!-- Audio Player -->
-    <audio id="bgMusic" loop autoplay preload="auto">
+    <audio id="bgMusic" loop preload="auto">
         <source src="https://archive.org/download/verdadeira-arte-a-noiva-fantasma/Verdadeira%20Arte%20-%20A%20Noiva%20Fantasma.mp3" type="audio/mpeg">
     </audio>
     
@@ -618,6 +618,10 @@
     </div>
 
     <script>
+        // Configurar áudio
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 0.1; // 10% do volume
+
         // Criar partículas
         const particlesContainer = document.getElementById('particles');
         const isMobile = window.innerWidth < 768;
@@ -648,20 +652,12 @@
         const secondPasswordInput = document.getElementById('secondPassword');
         const errorMsg2 = document.getElementById('errorMsg2');
 
-        // Configurar áudio para iniciar automaticamente com volume baixo
-        const bgMusic = document.getElementById('bgMusic');
-        bgMusic.volume = 0.1; // 10% do volume
-        
-        // Tentar iniciar a música automaticamente
-        bgMusic.play().catch(function(error) {
-            console.log('Autoplay bloqueado. A música iniciará ao interagir com a página.');
-            // Iniciar música no primeiro clique
-            document.addEventListener('click', function() {
-                bgMusic.play();
-            }, { once: true });
-        });
-
         function acceptChallenge() {
+            // Iniciar música ao clicar em "Sim"
+            bgMusic.play().catch((error) => {
+                console.log('Erro ao iniciar música:', error);
+            });
+
             primaryPage.style.transition = 'opacity 1.5s ease-out';
             primaryPage.style.opacity = '0';
             
