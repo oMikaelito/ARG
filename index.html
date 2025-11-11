@@ -11,7 +11,6 @@
         });
     </script>
     <style>
-        /* [SEU CSS COMPLETO VAI AQUI] */
         * {
             margin: 0;
             padding: 0;
@@ -502,8 +501,8 @@
 </head>
 <body>
     
-    <audio id="bgMusic" loop preload="auto" autoplay muted>
-        <source src="https://github.com/oMikaelito/FATUMFILUM/raw/main/Verdadeira-Arte-A-Noiva-Fantasma.ogg" type="audio/ogg">
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://github.com/oMikaelito/FATUMFILUM/raw/main/Verdadeira-Arte-A-Noiva-Fantasma.ogg" type="audio/mpeg">
     </audio>
     
     <div class="particles" id="particles"></div>
@@ -616,13 +615,10 @@
     </div>
 
     <script>
-        // O JavaScript não precisa de mudanças.
-        
         const bgMusicPlayer = document.getElementById('bgMusic'); 
-        let soundActivated = false;
+        let musicStarted = false;
 
-        bgMusicPlayer.play().catch(e => console.log("Autoplay mudo iniciado ou já em progresso."));
-
+        // Criar partículas
         const particlesContainer = document.getElementById('particles');
         const isMobile = window.innerWidth < 768;
         const particleCount = isMobile ? 40 : 80;
@@ -650,14 +646,18 @@
         const secondForm = document.getElementById('secondForm');
         const secondPasswordInput = document.getElementById('secondPassword');
         const errorMsg2 = document.getElementById('errorMsg2');
-        
+
         async function acceptChallenge() {
-            
-            if (!soundActivated) {
-                bgMusicPlayer.muted = false;
+            if (!musicStarted) {
                 bgMusicPlayer.volume = 0.1;
-                soundActivated = true;
-                console.log('Som ativado pelo usuário.');
+                
+                try {
+                    await bgMusicPlayer.play();
+                    musicStarted = true;
+                    console.log('Música iniciada com sucesso.');
+                } catch (error) {
+                    console.error("Erro ao tocar música:", error);
+                }
             }
 
             primaryPage.style.transition = 'opacity 1.5s ease-out';
