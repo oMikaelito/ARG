@@ -19,21 +19,26 @@
 
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap');
 
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'JetBrains Mono', 'Consolas', monospace;
             background: #000;
-            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #666;
             position: relative;
-            overflow: hidden;
+            padding: 10px;
         }
 
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
@@ -46,7 +51,7 @@
 
         body::after {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
@@ -65,19 +70,21 @@
         .container {
             width: 100%;
             max-width: 500px;
-            padding: 40px;
             position: relative;
             z-index: 1;
+            margin: auto;
         }
 
         .login-page, .main-page {
             background: rgba(10, 10, 10, 0.6);
             border: 1px solid rgba(100, 100, 100, 0.1);
             border-radius: 2px;
-            padding: 60px 40px;
+            padding: clamp(30px, 8vw, 60px) clamp(20px, 6vw, 40px);
             box-shadow: 
                 0 0 50px rgba(0, 0, 0, 0.5),
                 inset 0 0 50px rgba(0, 0, 0, 0.2);
+            max-height: 95vh;
+            overflow-y: auto;
         }
 
         .login-page {
@@ -93,9 +100,9 @@
         }
 
         .symbol-img {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 50px;
+            width: clamp(60px, 20vw, 100px);
+            height: clamp(60px, 20vw, 100px);
+            margin: 0 auto clamp(30px, 8vw, 50px);
             position: relative;
             filter: drop-shadow(0 0 25px rgba(139, 0, 0, 0.5));
         }
@@ -124,8 +131,8 @@
         }
 
         .symbol {
-            font-size: 60px;
-            margin-bottom: 50px;
+            font-size: clamp(40px, 12vw, 60px);
+            margin-bottom: clamp(30px, 8vw, 50px);
             opacity: 0.7;
             text-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
             animation: glow 2s ease-in-out infinite;
@@ -137,21 +144,21 @@
         }
 
         .message {
-            font-size: 14px;
+            font-size: clamp(12px, 3vw, 14px);
             line-height: 2.4;
-            margin-bottom: 50px;
+            margin-bottom: clamp(30px, 8vw, 50px);
             opacity: 0.8;
             letter-spacing: 0.5px;
         }
 
         input[type="password"] {
             width: 100%;
-            padding: 15px 0;
+            padding: 15px 10px;
             background: rgba(20, 20, 20, 0.4);
             border: none;
             border-bottom: 2px solid #2a2a2a;
             color: #999;
-            font-size: 16px;
+            font-size: clamp(14px, 3.5vw, 16px);
             font-family: 'JetBrains Mono', 'Consolas', monospace;
             text-align: center;
             letter-spacing: 6px;
@@ -176,7 +183,7 @@
         }
 
         .error {
-            font-size: 12px;
+            font-size: clamp(11px, 2.5vw, 12px);
             margin-top: 25px;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -196,26 +203,26 @@
         }
 
         .hint {
-            font-size: 11px;
-            margin-top: 70px;
+            font-size: clamp(10px, 2.5vw, 11px);
+            margin-top: clamp(40px, 10vw, 70px);
             opacity: 0.4;
             letter-spacing: 1px;
             font-style: italic;
         }
 
         .content {
-            font-size: 14px;
+            font-size: clamp(12px, 3vw, 14px);
             line-height: 2.4;
-            margin-bottom: 40px;
+            margin-bottom: clamp(30px, 6vw, 40px);
             opacity: 0.8;
             letter-spacing: 0.5px;
         }
 
         .divider {
-            width: 60px;
+            width: clamp(40px, 15vw, 60px);
             height: 2px;
             background: linear-gradient(90deg, transparent, #333, transparent);
-            margin: 50px auto;
+            margin: clamp(30px, 8vw, 50px) auto;
             position: relative;
         }
 
@@ -230,11 +237,11 @@
         }
 
         .code {
-            font-size: 12px;
+            font-size: clamp(11px, 2.5vw, 12px);
             opacity: 0.6;
             letter-spacing: 2px;
-            margin: 30px 0;
-            padding: 20px;
+            margin: clamp(20px, 5vw, 30px) 0;
+            padding: clamp(15px, 4vw, 20px);
             background: rgba(0, 0, 0, 0.3);
             border-left: 2px solid #333;
         }
@@ -243,11 +250,11 @@
             background: none;
             border: 1px solid #2a2a2a;
             color: #555;
-            font-size: 11px;
+            font-size: clamp(10px, 2.5vw, 11px);
             font-family: 'JetBrains Mono', 'Consolas', monospace;
             cursor: pointer;
             letter-spacing: 3px;
-            padding: 12px 30px;
+            padding: 12px clamp(20px, 6vw, 30px);
             transition: all 0.4s ease;
             text-transform: uppercase;
             margin-top: 20px;
@@ -294,6 +301,57 @@
             5% { opacity: 0.8; }
             95% { opacity: 0.8; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Media queries para ajustes específicos */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                max-width: 100%;
+            }
+
+            input[type="password"] {
+                letter-spacing: 3px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .login-page, .main-page {
+                padding: 20px 15px;
+            }
+
+            .message, .content {
+                line-height: 2;
+                margin-bottom: 20px;
+            }
+
+            .symbol-img {
+                margin-bottom: 20px;
+            }
+
+            .hint {
+                margin-top: 30px;
+            }
+        }
+
+        /* Scrollbar personalizada para overflow */
+        .login-page::-webkit-scrollbar,
+        .main-page::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .login-page::-webkit-scrollbar-track,
+        .main-page::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-page::-webkit-scrollbar-thumb,
+        .main-page::-webkit-scrollbar-thumb {
+            background: rgba(139, 0, 0, 0.3);
+            border-radius: 3px;
         }
     </style>
 </head>
@@ -395,9 +453,12 @@
     </div>
 
     <script>
-        // Criar partículas
+        // Criar partículas com quantidade ajustada para mobile
         const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 80; i++) {
+        const isMobile = window.innerWidth < 768;
+        const particleCount = isMobile ? 40 : 80;
+        
+        for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
@@ -437,6 +498,7 @@
                     mainPage.style.display = 'block';
                     mainPage.style.opacity = '0';
                     mainPage.style.transition = 'opacity 1.5s ease-in';
+                    mainPage.scrollTop = 0;
                     
                     setTimeout(() => {
                         mainPage.style.opacity = '1';
@@ -471,6 +533,7 @@
                     finalPage.style.display = 'block';
                     finalPage.style.opacity = '0';
                     finalPage.style.transition = 'opacity 1.5s ease-in';
+                    finalPage.scrollTop = 0;
                     
                     setTimeout(() => {
                         finalPage.style.opacity = '1';
@@ -502,6 +565,7 @@
                 loginPage.style.display = 'block';
                 loginPage.style.opacity = '0';
                 loginPage.style.transition = 'opacity 1.5s ease-in';
+                loginPage.scrollTop = 0;
                 
                 setTimeout(() => {
                     loginPage.style.opacity = '1';
